@@ -1,0 +1,757 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Namitha K — Data Analyst</title>
+<meta name="description" content="Namitha K — Data Analyst. SQL, Python, Power BI, Excel, Tableau. Palakkad, Kerala, open to Bangalore." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --canvas:#EDEFEC;
+    --panel:#FFFFFF;
+    --ink:#14181A;
+    --muted:#5B6660;
+    --teal:#0F7C66;
+    --amber:#D98E3B;
+    --line:#D7DBD4;
+    --console-bg:#14181A;
+    --console-text:#EDEFEC;
+    --console-keyword:#6FCF97;
+    --console-string:#E8A33D;
+    --console-muted:#7C8783;
+    --radius:10px;
+    --maxw:1040px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+
+  body{
+    margin:0;
+    background:var(--canvas);
+    color:var(--ink);
+    font-family:'IBM Plex Sans', sans-serif;
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  a{color:inherit;}
+
+  .mono{font-family:'IBM Plex Mono', monospace;}
+
+  .wrap{
+    max-width:var(--maxw);
+    margin:0 auto;
+    padding:0 24px;
+  }
+
+  /* ---------- NAV ---------- */
+  header.site-nav{
+    position:sticky;
+    top:0;
+    z-index:50;
+    background:rgba(237,239,236,0.92);
+    backdrop-filter:blur(6px);
+    border-bottom:1px solid var(--line);
+  }
+  .site-nav .wrap{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    height:60px;
+  }
+  .brand{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:600;
+    font-size:14px;
+    letter-spacing:0.02em;
+  }
+  .brand .dot{color:var(--teal);}
+  nav.tabs{
+    display:flex;
+    gap:2px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:8px;
+    padding:3px;
+  }
+  nav.tabs a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    text-decoration:none;
+    color:var(--muted);
+    padding:7px 12px;
+    border-radius:6px;
+    transition:background .15s ease, color .15s ease;
+  }
+  nav.tabs a:hover{background:var(--canvas); color:var(--ink);}
+  nav.tabs a:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+
+  @media (max-width:640px){
+    nav.tabs{display:none;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    padding:64px 0 40px;
+  }
+  .hero-grid{
+    display:grid;
+    grid-template-columns:1fr;
+    gap:22px;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--teal);
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    margin:0 0 10px;
+  }
+  h1.name{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:700;
+    font-size:clamp(32px, 6vw, 52px);
+    margin:0 0 6px;
+    letter-spacing:-0.01em;
+  }
+  .role-line{
+    font-size:18px;
+    color:var(--muted);
+    margin:0 0 28px;
+    max-width:52ch;
+  }
+
+  .console{
+    background:var(--console-bg);
+    color:var(--console-text);
+    border-radius:var(--radius);
+    padding:22px 24px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13.5px;
+    overflow-x:auto;
+    box-shadow:0 1px 0 rgba(0,0,0,0.04);
+  }
+  .console .console-dots{
+    display:flex;
+    gap:6px;
+    margin-bottom:16px;
+  }
+  .console .console-dots span{
+    width:9px;height:9px;border-radius:50%;
+    background:#3A403C;
+    display:inline-block;
+  }
+  .console pre{
+    margin:0 0 14px;
+    white-space:pre-wrap;
+    color:var(--console-text);
+  }
+  .console .kw{color:var(--console-keyword);}
+  .console .str{color:var(--console-string);}
+  .console .cm{color:var(--console-muted);}
+  .caret{
+    display:inline-block;
+    width:8px;height:15px;
+    background:var(--console-keyword);
+    vertical-align:-2px;
+    animation:blink 1.1s steps(1) infinite;
+  }
+  @media (prefers-reduced-motion:reduce){
+    .caret{animation:none;}
+  }
+  @keyframes blink{50%{opacity:0;}}
+
+  table.result{
+    width:100%;
+    border-collapse:collapse;
+    margin-top:6px;
+    font-size:13px;
+  }
+  table.result th{
+    text-align:left;
+    color:var(--console-muted);
+    font-weight:500;
+    padding:6px 10px 6px 0;
+    border-bottom:1px solid #2A2F2B;
+  }
+  table.result td{
+    padding:8px 10px 8px 0;
+    border-bottom:1px solid #2A2F2B;
+    color:var(--console-text);
+  }
+  table.result tr:last-child td{border-bottom:none;}
+  .rowcount{
+    margin-top:12px;
+    color:var(--console-muted);
+    font-size:12px;
+  }
+
+  .hero-links{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+  }
+  .hero-links a{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    text-decoration:none;
+    border:1px solid var(--line);
+    background:var(--panel);
+    padding:8px 14px;
+    border-radius:7px;
+    transition:border-color .15s ease, transform .1s ease;
+  }
+  .hero-links a:hover{border-color:var(--teal); color:var(--teal);}
+  .hero-links a:focus-visible{outline:2px solid var(--teal); outline-offset:2px;}
+
+  /* ---------- KPI STRIP ---------- */
+  .kpi-strip{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:14px;
+    margin:44px 0;
+  }
+  @media (max-width:720px){
+    .kpi-strip{grid-template-columns:repeat(2,1fr);}
+  }
+  .kpi{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:18px 16px;
+  }
+  .kpi .num{
+    font-family:'IBM Plex Mono', monospace;
+    font-weight:700;
+    font-size:26px;
+    color:var(--teal);
+    display:block;
+  }
+  .kpi .label{
+    font-size:12.5px;
+    color:var(--muted);
+    margin-top:4px;
+  }
+
+  /* ---------- SECTIONS ---------- */
+  section{
+    padding:56px 0;
+    border-top:1px solid var(--line);
+  }
+  .section-head{
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    margin-bottom:28px;
+    gap:16px;
+    flex-wrap:wrap;
+  }
+  h2.section-title{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+    text-transform:uppercase;
+    letter-spacing:0.12em;
+    color:var(--muted);
+    margin:0;
+  }
+  h2.section-title .idx{color:var(--teal); margin-right:8px;}
+  .section-sub{
+    font-size:13px;
+    color:var(--muted);
+    font-family:'IBM Plex Mono', monospace;
+  }
+
+  /* ---------- EXPERIENCE TIMELINE ---------- */
+  .timeline{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .tl-item{
+    display:grid;
+    grid-template-columns:150px 1fr;
+    gap:20px;
+    padding:22px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .tl-item:last-child{border-bottom:none;}
+  @media (max-width:640px){
+    .tl-item{grid-template-columns:1fr;}
+  }
+  .tl-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+    padding-top:2px;
+  }
+  .tl-role{
+    font-weight:600;
+    font-size:16px;
+    margin:0 0 2px;
+  }
+  .tl-org{
+    font-size:14px;
+    color:var(--teal);
+    margin:0 0 10px;
+    font-family:'IBM Plex Mono', monospace;
+  }
+  .tl-desc{
+    color:var(--muted);
+    font-size:14.5px;
+    margin:0;
+    max-width:60ch;
+  }
+
+  /* ---------- PROJECTS ---------- */
+  .grid-projects{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:16px;
+  }
+  @media (max-width:720px){
+    .grid-projects{grid-template-columns:1fr;}
+  }
+  .card{
+    background:var(--panel);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:20px;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{
+    transform:translateY(-2px);
+    box-shadow:0 6px 18px rgba(20,24,22,0.06);
+  }
+  .card h3{
+    margin:0 0 8px;
+    font-size:16px;
+  }
+  .card p{
+    margin:0 0 14px;
+    color:var(--muted);
+    font-size:14px;
+  }
+  .tag-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+  }
+  .tag{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    background:var(--canvas);
+    border:1px solid var(--line);
+    color:var(--muted);
+    padding:4px 8px;
+    border-radius:5px;
+  }
+  .card-link{
+    display:inline-block;
+    margin-top:14px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--teal);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+  }
+  .card-link:hover{border-bottom-color:var(--teal);}
+
+  /* ---------- SKILLS ---------- */
+  .skills-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+  }
+  @media (max-width:720px){
+    .skills-grid{grid-template-columns:1fr 1fr;}
+  }
+  @media (max-width:480px){
+    .skills-grid{grid-template-columns:1fr;}
+  }
+  .skill-group h3{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    text-transform:uppercase;
+    letter-spacing:0.08em;
+    color:var(--amber);
+    margin:0 0 12px;
+  }
+  .pill-row{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .pill{
+    font-size:13px;
+    background:var(--panel);
+    border:1px solid var(--line);
+    padding:7px 12px;
+    border-radius:20px;
+  }
+
+  /* ---------- CERTIFICATIONS ---------- */
+  .cert-list{
+    display:flex;
+    flex-direction:column;
+    gap:0;
+  }
+  .cert-item{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:16px;
+    padding:16px 0;
+    border-bottom:1px solid var(--line);
+  }
+  .cert-item:last-child{border-bottom:none;}
+  .cert-name{font-weight:600; font-size:15px;}
+  .cert-meta{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12px;
+    color:var(--muted);
+    margin-top:3px;
+  }
+  .status{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:11px;
+    padding:5px 10px;
+    border-radius:20px;
+    white-space:nowrap;
+  }
+  .status.done{background:rgba(15,124,102,0.1); color:var(--teal);}
+  .status.progress{background:rgba(217,142,59,0.12); color:var(--amber);}
+
+  /* ---------- EDUCATION ---------- */
+  .edu-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    flex-wrap:wrap;
+    gap:8px;
+  }
+  .edu-degree{font-weight:600; font-size:16px;}
+  .edu-school{color:var(--muted); font-size:14px; margin-top:2px;}
+  .edu-date{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:12.5px;
+    color:var(--muted);
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:48px 0 64px;
+    border-top:1px solid var(--line);
+  }
+  .footer-grid{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    flex-wrap:wrap;
+    gap:24px;
+  }
+  .footer-title{
+    font-family:'IBM Plex Mono', monospace;
+    font-size:22px;
+    font-weight:700;
+    margin:0 0 8px;
+  }
+  .footer-sub{color:var(--muted); font-size:14px; max-width:44ch;}
+  .footer-links{
+    display:flex;
+    flex-direction:column;
+    gap:8px;
+    font-family:'IBM Plex Mono', monospace;
+    font-size:13px;
+  }
+  .footer-links a{text-decoration:none; color:var(--teal);}
+  .footer-links a:hover{text-decoration:underline;}
+  .copyright{
+    margin-top:32px;
+    font-size:12px;
+    color:var(--muted);
+    font-family:'IBM Plex Mono', monospace;
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="wrap">
+    <div class="brand">namitha<span class="dot">.</span>k</div>
+    <nav class="tabs" aria-label="Section navigation">
+      <a href="#experience">Experience</a>
+      <a href="#projects">Projects</a>
+      <a href="#skills">Skills</a>
+      <a href="#certifications">Certifications</a>
+      <a href="#contact">Contact</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <!-- HERO -->
+  <section class="hero" style="border-top:none; padding-top:56px;">
+    <p class="eyebrow">// Data Analyst</p>
+    <h1 class="name">Namitha K</h1>
+    <p class="role-line">Data analyst with hands-on SQL, Python, and BI experience — turning raw tables into decisions. Based in Palakkad, Kerala. Open to relocating to Bangalore.</p>
+
+    <div class="console" role="img" aria-label="Mock SQL query returning Namitha K's candidate profile">
+      <div class="console-dots"><span></span><span></span><span></span></div>
+      <pre><span class="cm">-- querying for a candidate</span>
+<span class="kw">SELECT</span> name, role, location, status
+<span class="kw">FROM</span> candidates
+<span class="kw">WHERE</span> skills <span class="kw">@></span> <span class="str">['SQL','Python','Power BI','Excel']</span>
+  <span class="kw">AND</span> availability <span class="kw">=</span> <span class="str">'immediate'</span>;<span class="caret"></span></pre>
+      <table class="result">
+        <thead>
+          <tr><th>name</th><th>role</th><th>location</th><th>status</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Namitha K</td>
+            <td>Data Analyst</td>
+            <td>Palakkad → Bangalore</td>
+            <td>Actively looking</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="rowcount">1 row returned</div>
+    </div>
+
+    <div class="hero-links">
+      <a href="mailto:pramodnamitha954@gmail.com">pramodnamitha954@gmail.com</a>
+      <a href="tel:+919188370366">+91 91883 70366</a>
+      <a href="https://linkedin.com/in/namitha-k-a370a3273" target="_blank" rel="noopener">LinkedIn</a>
+      <a href="https://github.com/knamitha" target="_blank" rel="noopener">GitHub</a>
+    </div>
+  </section>
+
+  <!-- KPI STRIP -->
+  <div class="kpi-strip">
+    <div class="kpi">
+      <span class="num">8 mo</span>
+      <div class="label">Data Analyst internship — Techolas Technology</div>
+    </div>
+    <div class="kpi">
+      <span class="num">5</span>
+      <div class="label">Projects shipped across analytics &amp; ML</div>
+    </div>
+    <div class="kpi">
+      <span class="num">3</span>
+      <div class="label">Certifications — completed &amp; in progress</div>
+    </div>
+    <div class="kpi">
+      <span class="num">EEE→DA</span>
+      <div class="label">Engineering background, self-driven pivot to data</div>
+    </div>
+  </div>
+
+  <!-- EXPERIENCE -->
+  <section id="experience">
+    <div class="section-head">
+      <h2 class="section-title"><span class="idx">01</span>Experience</h2>
+      <span class="section-sub">chronological</span>
+    </div>
+    <div class="timeline">
+      <div class="tl-item">
+        <div class="tl-date">Jul 2025 – Feb 2026</div>
+        <div>
+          <p class="tl-role">Data Analyst Intern</p>
+          <p class="tl-org">Techolas Technology, Kerala</p>
+          <p class="tl-desc">Eight-month internship working with real datasets — data cleaning, exploratory analysis, dashboarding, and reporting to support business decisions.</p>
+        </div>
+      </div>
+      <div class="tl-item">
+        <div class="tl-date">Jul 2025 – Sep 2025</div>
+        <div>
+          <p class="tl-role">UI/UX Design Intern</p>
+          <p class="tl-org">Edu Tantr, Bangalore</p>
+          <p class="tl-desc">Worked on interface design fundamentals — user flows, wireframing, and usability principles that now inform how she designs dashboards and reports for readability.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PROJECTS -->
+  <section id="projects">
+    <div class="section-head">
+      <h2 class="section-title"><span class="idx">02</span>Projects</h2>
+      <span class="section-sub">selected work</span>
+    </div>
+    <div class="grid-projects">
+
+      <div class="card">
+        <h3>AI-Powered Q&amp;A REST API</h3>
+        <p>Built and deployed a live Q&amp;A API from scratch under deadline pressure — FastAPI backend, Groq's llama-3.1-8b-instant for inference, PostgreSQL on Render. Coded entirely in Google Colab due to hardware constraints.</p>
+        <div class="tag-row">
+          <span class="tag">FastAPI</span>
+          <span class="tag">Groq LLM</span>
+          <span class="tag">PostgreSQL</span>
+          <span class="tag">Render</span>
+        </div>
+        <a class="card-link" href="https://github.com/knamitha/ai-qa-api" target="_blank" rel="noopener">View repo →</a>
+      </div>
+
+      <div class="card">
+        <h3>EV Charging Demand Prediction</h3>
+        <p>Predictive model estimating electric vehicle charging demand, wrapped in an interactive Gradio interface for non-technical users to explore forecasts.</p>
+        <div class="tag-row">
+          <span class="tag">Python</span>
+          <span class="tag">Scikit-learn</span>
+          <span class="tag">Gradio</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Customer Churn Prediction Dashboard</h3>
+        <p>End-to-end Excel dashboard identifying at-risk customers, with segment breakdowns and churn drivers surfaced for a non-technical stakeholder audience.</p>
+        <div class="tag-row">
+          <span class="tag">Excel</span>
+          <span class="tag">Dashboarding</span>
+          <span class="tag">Data Viz</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Amazon &amp; Adidas Sales Analysis</h3>
+        <p>Comparative sales analysis uncovering pricing, category, and seasonal trends across two major retail datasets.</p>
+        <div class="tag-row">
+          <span class="tag">Python</span>
+          <span class="tag">Pandas</span>
+          <span class="tag">EDA</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Google Play Store Analysis</h3>
+        <p>Exploratory analysis of app store data — ratings, installs, and category performance — to surface patterns in what drives app success.</p>
+        <div class="tag-row">
+          <span class="tag">Python</span>
+          <span class="tag">Data Cleaning</span>
+          <span class="tag">Visualization</span>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SKILLS -->
+  <section id="skills">
+    <div class="section-head">
+      <h2 class="section-title"><span class="idx">03</span>Skills</h2>
+      <span class="section-sub">tools &amp; concepts</span>
+    </div>
+    <div class="skills-grid">
+      <div class="skill-group">
+        <h3>Languages &amp; Querying</h3>
+        <div class="pill-row">
+          <span class="pill">SQL</span>
+          <span class="pill">Python</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>BI &amp; Reporting</h3>
+        <div class="pill-row">
+          <span class="pill">Power BI</span>
+          <span class="pill">Tableau</span>
+          <span class="pill">Excel</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Data Concepts</h3>
+        <div class="pill-row">
+          <span class="pill">Dimensional Modeling</span>
+          <span class="pill">SCD Type 1 &amp; 2</span>
+          <span class="pill">Schema Drift</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>ML &amp; APIs</h3>
+        <div class="pill-row">
+          <span class="pill">Scikit-learn</span>
+          <span class="pill">FastAPI</span>
+          <span class="pill">Gradio</span>
+        </div>
+      </div>
+      <div class="skill-group">
+        <h3>Design</h3>
+        <div class="pill-row">
+          <span class="pill">UI/UX Fundamentals</span>
+          <span class="pill">Wireframing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CERTIFICATIONS -->
+  <section id="certifications">
+    <div class="section-head">
+      <h2 class="section-title"><span class="idx">04</span>Certifications</h2>
+      <span class="section-sub">completed &amp; in progress</span>
+    </div>
+    <div class="cert-list">
+      <div class="cert-item">
+        <div>
+          <div class="cert-name">Nactet</div>
+        </div>
+        <span class="status done">Completed</span>
+      </div>
+      <div class="cert-item">
+        <div>
+          <div class="cert-name">Deloitte Australia — Data Analytics Job Simulation</div>
+          <div class="cert-meta">Forage</div>
+        </div>
+        <span class="status done">Completed</span>
+      </div>
+      <div class="cert-item">
+        <div>
+          <div class="cert-name">Google Advanced Data Analytics Professional Certificate</div>
+          <div class="cert-meta">Jun 2026 – Present</div>
+        </div>
+        <span class="status progress">In Progress</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- EDUCATION -->
+  <section id="education">
+    <div class="section-head">
+      <h2 class="section-title"><span class="idx">05</span>Education</h2>
+    </div>
+    <div class="edu-row">
+      <div>
+        <div class="edu-degree">B.Tech, Electrical &amp; Electronics Engineering</div>
+        <div class="edu-school">Government Engineering College, Palakkad</div>
+      </div>
+      <div class="edu-date">2025</div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <p class="footer-title">Let's talk data.</p>
+        <p class="footer-sub">Open to Data Analyst, BI, and adjacent roles — actively interviewing, based in Kerala, open to Bangalore.</p>
+      </div>
+      <div class="footer-links">
+        <a href="mailto:pramodnamitha954@gmail.com">pramodnamitha954@gmail.com</a>
+        <a href="tel:+919188370366">+91 91883 70366</a>
+        <a href="https://linkedin.com/in/namitha-k-a370a3273" target="_blank" rel="noopener">linkedin.com/in/namitha-k</a>
+        <a href="https://github.com/knamitha" target="_blank" rel="noopener">github.com/knamitha</a>
+      </div>
+    </div>
+    <p class="copyright">© 2026 Namitha K. Built with SQL on the mind.</p>
+  </div>
+</footer>
+
+</body>
+</html>
